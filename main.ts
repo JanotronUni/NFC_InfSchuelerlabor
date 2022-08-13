@@ -11,7 +11,12 @@ namespace NFC {
     let uid = pins.createBuffer(4);
     let myRxPin=SerialPin.P12;
     let myTxPin=SerialPin.P16;
-    let init=false;
+    serial.redirect(
+            myRxPin,
+            myTxPin,
+            BaudRate.BaudRate115200
+        )
+    let init=true;
     password[0] = 0xFF;
     password[1] = 0xFF;
     password[2] = 0xFF;
@@ -36,18 +41,11 @@ namespace NFC {
         if (receivedLen == 15) {
             receivedBuffer = serial.readBuffer(15);
         }
+	
     }
 
-    //% weight=100
-    //% blockId="NFC_setSerial" block="Starte NFC Reader"
-    export function NFC_setSerial(): void {
-        serial.redirect(
-            myRxPin,
-            myTxPin,
-            BaudRate.BaudRate115200
-        )
-        init=true;
-    }
+    
+    
 
 
     //% weight=90
