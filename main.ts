@@ -83,29 +83,7 @@ namespace NFC {
         }
     }
 
-    //% weight=70
-    //% blockId="detectedRFIDcard" block="Chip erkannt?"
-    export function detectedRFIDcard(): boolean {
-        serial.setRxBufferSize(100)
-        wakeup();
-        let myBuffer: number[] = []
-        myBuffer = [0x00, 0x00, 0xFF, 0x04, 0xFC, 0xD4, 0x4A, 0x01, 0x00, 0xE1, 0x00]
-        let cmdUID = pins.createBufferFromArray(myBuffer)
-        serial.writeBuffer(cmdUID);
-        basic.pause(50);
-        receivedLen = RxBufferedSize();
-        if (receivedLen == 25) {
-            receivedBuffer = serial.readBuffer(25);
-            for (let i = 0; i < 4; i++) {
-                uid[i] = receivedBuffer[19 + i];
-            }
-            if (uid[0] == uid[1] && uid[1] == uid[2] && uid[2] == uid[3] && uid[3] == 0xFF) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
+    
 
     function getHexStr(myNum: number): string {
         let tempStr = "";
